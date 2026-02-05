@@ -1,0 +1,18 @@
+{
+	"printWidth": 1,
+	"bracketSameLine": false,
+	"vueAttributesPerLine": {
+		"singleline": "none",
+		"multiline": "one"
+	},
+	"plugins": ["prettier-plugin-multiline-classnames"],
+	"multilineClassnames": "always",
+	"multilineClassnamesIndent": 2,
+	"tabWidth": 2,
+	"useTabs": false,
+	"singleQuote": true,
+	"semi": false,
+	"trailingComma": "none",
+	"arrowParens": "avoid",
+	"endOfLine": "auto"
+}
