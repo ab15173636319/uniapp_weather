@@ -133,6 +133,9 @@
 		ref,
 		watch
 	} from 'vue';
+	import {
+		onPullDownRefresh
+	} from "@dcloudio/uni-app"
 	import http from '../../utils/http';
 
 	const baseUrl = 'https://uapis.cn'
@@ -182,7 +185,13 @@
 	})
 
 
-	watch(() => show.value, (val) => {})
+	onPullDownRefresh(async () => {
+		uni.stopPullDownRefresh()
+		loading.value = true
+		await getCurrentIp()
+		await getWeather()
+		loading.value = false
+	})
 </script>
 
 <style lang="scss" scoped>

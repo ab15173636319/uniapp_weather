@@ -170,20 +170,26 @@ export function filterCities() {
 			let citiesCopy = Array.isArray(cities) ? [...cities] : [];
 
 			const singnCity = {
-				"privince": "地级市",
+				"province": "地级市",
 				"city": []
 			};
 
 			for (let i = citiesCopy.length - 1; i >= 0; i--) {
 				const item = citiesCopy[i];
 				// 将地级市单独陈列
-				if (item.length === 1) {
-					singnCity.city.push(item);
+				if (item.city.length === 1) {
+					singnCity.city.push(...item.city);
+					citiesCopy.splice(i, 1);
+				}
+
+				if (item.province === '台湾省') {
 					citiesCopy.splice(i, 1);
 				}
 			}
 
-			resolve(citiesCopy.reverse())
+			const res = [singnCity].concat(citiesCopy)
+			console.log(res);
+			resolve(res)
 
 		} catch (error) {
 			//TODO handle the exception

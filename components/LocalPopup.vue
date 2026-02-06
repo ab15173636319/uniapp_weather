@@ -1,15 +1,16 @@
 <template>
 	<up-popup v-model:show="show" @close="closeHandler">
 		<view class="popup">
+			<view class="title">选择城市</view>
 			<!-- <up-input prefix-icon="search" placeholder="搜索城市..."></up-input> -->
 			<view class="">
-				<scroll-view scroll-y="true" style="height: 90vh">
+				<scroll-view scroll-y="true" style="height: 80vh">
 					<up-collapse>
 						<template v-for="c in cities">
 							<up-collapse-item :title="c.province" name="Docs guide">
 								<up-list>
 									<up-list-item v-for="i in c.city">
-										<up-button plain @click="selectHandler(i)">{{i}}</up-button>
+										<view class="city" @click="selectHandler(i)">{{i}}</view>
 									</up-list-item>
 								</up-list>
 							</up-collapse-item>
@@ -60,7 +61,24 @@
 
 <style scoped lang="scss">
 	.popup {
-		height: 90vh;
-		padding-top: 80rpx;
+		height: 80vh;
+		padding-bottom: 80rpx;
+	}
+
+	.title {
+		height: 80rpx;
+		display: flex;
+		align-items: center;
+		padding: 0 30rpx;
+		font-size: 40rpx;
+		font-weight: bold;
+	}
+
+	.city {
+		margin: 15rpx 20rpx;
+		padding: 30rpx 20rpx;
+		background-color: rgba(200, 200, 200, 0.3);
+		border-radius: 15rpx;
+		box-shadow: 1rpx 1rpx 40rpx rgba(200, 200, 200, 0.3);
 	}
 </style>
