@@ -7,6 +7,12 @@
 				"navigationStyle": "custom",
 				"enablePullDownRefresh": true
 			}
+		},
+		{
+			"path": "components/SettingPopup/SettingPopup",
+			"style": {
+				"navigationBarTitleText": ""
+			}
 		}
 	],
 	"globalStyle": {

@@ -8,6 +8,8 @@
 
 			<scroll-view scroll-y="true" class="scroll-y">
 				<view>
+					<up-navbar leftIcon="" rightIcon="setting" bgColor="transparent" @rightClick="showMenu=!showMenu"></up-navbar>
+
 					<weather-icon v-if="ipInfo.weather" :weather="ipInfo.weather"></weather-icon>
 					<weather-text v-if="ipInfo.weather" :weather="ipInfo.weather"></weather-text>
 
@@ -119,7 +121,7 @@
 			</scroll-view>
 
 			<local-popup v-model="show" @selectCity="selectCityHandler"></local-popup>
-
+			<menu-popup v-model="showMenu"></menu-popup>
 		</view>
 	</view>
 </template>
@@ -128,6 +130,7 @@
 	import WeatherIcon from "/components/WeatherIcon.vue"
 	import WeatherText from "/components/WeatherText.vue"
 	import LocalPopup from "/components/LocalPopup.vue"
+	import MenuPopup from "/components/MenuPopup.vue"
 	import {
 		onMounted,
 		ref,
@@ -143,6 +146,7 @@
 	const ipInfo = ref({})
 	const loading = ref(false)
 	const show = ref(false)
+	const showMenu = ref(false)
 
 	async function getCurrentIp() {
 		const res = await http(baseUrl + '/api/v1/network/myip')
@@ -171,11 +175,7 @@
 	}
 
 	onMounted(async () => {
-		loading.value = true
-		await getCurrentIp()
-		await getWeather()
-		loading.value = false
-
+		await reload()
 	})
 
 	watch(() => ipData.value, async (val) => {
@@ -187,10 +187,7 @@
 
 	onPullDownRefresh(async () => {
 		uni.stopPullDownRefresh()
-		loading.value = true
-		await getCurrentIp()
-		await getWeather()
-		loading.value = false
+		await reload()
 	})
 </script>
 
