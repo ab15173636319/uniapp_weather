@@ -2,7 +2,7 @@
 	<up-popup v-model:show="show" @close="closeHandler">
 		<view class="popup">
 			<view class="title">设置</view>
-				<up-alert type = "warning" description = "开发版本..."></up-alert>
+			<up-alert type="warning" description="开发版本..."></up-alert>
 			<view class="">
 				<up-list>
 					<up-list-item>
@@ -22,59 +22,59 @@
 </template>
 
 <script setup lang="js">
-	import {
-		onBeforeMount,
-		ref,
-		watch
-	} from 'vue';
-	import {
-		onShow
-	} from "@dcloudio/uni-app"
+import {
+	onBeforeMount,
+	ref,
+	watch
+} from 'vue';
+import {
+	onShow
+} from "@dcloudio/uni-app"
 
-	const props = defineProps(['modelValue'])
-	const emit = defineEmits(['update:modelValue', 'selectCity'])
-	const show = ref(false)
+const props = defineProps(['modelValue'])
+const emit = defineEmits(['update:modelValue', 'selectCity'])
+const show = ref(false)
 
-	const version = ref()
+const version = ref()
 
-	onShow(() => {
-		const systemInfo = uni.getSystemInfoSync();
-		version.value = systemInfo.appVersion;
+onShow(() => {
+	const systemInfo = uni.getSystemInfoSync();
+	version.value = systemInfo.appVersion;
 
-	})
+})
 
-	watch(() => props.modelValue, (newVal) => {
-		show.value = newVal
-	}, {
-		immediate: true
-	})
+watch(() => props.modelValue, (newVal) => {
+	show.value = newVal
+}, {
+	immediate: true
+})
 
-	const closeHandler = () => {
-		show.value = false
-		emit('update:modelValue', show.value)
-	}
+const closeHandler = () => {
+	show.value = false
+	emit('update:modelValue', show.value)
+}
 </script>
 
 <style scoped lang="scss">
-	.popup {
-		height: 80vh;
-		padding-bottom: 80rpx;
-	}
+.popup {
+	height: 80vh;
+	padding-bottom: 80rpx;
+}
 
-	.title {
-		height: 80rpx;
-		display: flex;
-		align-items: center;
-		padding: 0 30rpx;
-		font-size: 40rpx;
-		font-weight: bold;
-	}
+.title {
+	height: 80rpx;
+	display: flex;
+	align-items: center;
+	padding: 0 30rpx;
+	font-size: 40rpx;
+	font-weight: bold;
+}
 
-	.city {
-		margin: 15rpx 20rpx;
-		padding: 30rpx 20rpx;
-		background-color: rgba(200, 200, 200, 0.3);
-		border-radius: 15rpx;
-		box-shadow: 1rpx 1rpx 40rpx rgba(200, 200, 200, 0.3);
-	}
+.city {
+	margin: 15rpx 20rpx;
+	padding: 30rpx 20rpx;
+	background-color: rgba(200, 200, 200, 0.3);
+	border-radius: 15rpx;
+	box-shadow: 1rpx 1rpx 40rpx rgba(200, 200, 200, 0.3);
+}
 </style>
