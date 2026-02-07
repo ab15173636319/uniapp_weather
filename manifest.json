@@ -2,7 +2,7 @@
     "name" : "天气预报",
     "appid" : "__UNI__C836760",
     "description" : "",
-    "versionName" : "1.0.0",
+    "versionName" : "0.0.6",
     "versionCode" : "100",
     "transformPx" : false,
     /* 5+App特有相关 */

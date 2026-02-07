@@ -112,7 +112,7 @@ MIT
 ## 致谢
 
 - 天气数据由 [uapis.cn](https://uapis.cn) 提供
-- 图标资源来源于网络
+- 图标由 [安妮](https://www.iconfont.cn/collections/detail?spm=a313x.user_detail.i1.dc64b3430.6b383a81Jts52J&cid=6324) 提供
 
 ---
 

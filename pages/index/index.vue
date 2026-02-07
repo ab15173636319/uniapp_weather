@@ -1,6 +1,6 @@
 <template>
 	<up-loading-page loading-color="#000000" :loading="loading"></up-loading-page>
-	<view v-cloak class="container">
+	<view class="container">
 		<view class="content">
 			<view class="decor-light decor-light-1"></view>
 			<view class="decor-light decor-light-2"></view>
@@ -8,6 +8,8 @@
 
 			<scroll-view scroll-y="true" class="scroll-y">
 				<view>
+					<up-navbar  leftIcon="setting" left-icon-color="#fff" bgColor="transparent" @leftClick="showMenu=!showMenu"></up-navbar>
+
 					<weather-icon v-if="ipInfo.weather" :weather="ipInfo.weather"></weather-icon>
 					<weather-text v-if="ipInfo.weather" :weather="ipInfo.weather"></weather-text>
 
@@ -24,15 +26,15 @@
 							<up-col :span="1"></up-col>
 							<up-col :span="4">
 								<view class="col-text" hover-class="col-text-hover">
-									<text>最高温度</text>
-									<text>{{ipInfo.temp_max}}℃</text>
+									<text>最低温度</text>
+									<text>{{ipInfo.temp_min}}℃</text>
 								</view>
 							</up-col>
 							<up-col :span="2"></up-col>
 							<up-col :span="4">
 								<view class="col-text" hover-class="col-text-hover">
 									<text>最高温度</text>
-									<text>{{ipInfo.temp_min}}℃</text>
+									<text>{{ipInfo.temp_max}}℃</text>
 								</view>
 							</up-col>
 							<up-col :span="1"></up-col>
@@ -119,7 +121,7 @@
 			</scroll-view>
 
 			<local-popup v-model="show" @selectCity="selectCityHandler"></local-popup>
-
+			<menu-popup v-model="showMenu"></menu-popup>
 		</view>
 	</view>
 </template>
@@ -128,11 +130,15 @@
 	import WeatherIcon from "/components/WeatherIcon.vue"
 	import WeatherText from "/components/WeatherText.vue"
 	import LocalPopup from "/components/LocalPopup.vue"
+	import MenuPopup from "/components/MenuPopup.vue"
 	import {
 		onMounted,
 		ref,
 		watch
 	} from 'vue';
+	import {
+		onPullDownRefresh
+	} from "@dcloudio/uni-app"
 	import http from '../../utils/http';
 
 	const baseUrl = 'https://uapis.cn'
@@ -140,6 +146,7 @@
 	const ipInfo = ref({})
 	const loading = ref(false)
 	const show = ref(false)
+	const showMenu = ref(false)
 
 	async function getCurrentIp() {
 		const res = await http(baseUrl + '/api/v1/network/myip')
@@ -168,11 +175,7 @@
 	}
 
 	onMounted(async () => {
-		loading.value = true
-		await getCurrentIp()
-		await getWeather()
-		loading.value = false
-
+		await reload()
 	})
 
 	watch(() => ipData.value, async (val) => {
@@ -182,7 +185,10 @@
 	})
 
 
-	watch(() => show.value, (val) => {})
+	onPullDownRefresh(async () => {
+		uni.stopPullDownRefresh()
+		await reload()
+	})
 </script>
 
 <style lang="scss" scoped>
